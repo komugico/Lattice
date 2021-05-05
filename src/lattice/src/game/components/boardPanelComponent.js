@@ -11,7 +11,7 @@ class BoardPanel extends Component{
         return (
             <Card>
                 <Card.Header>
-                    <b>Game Board</b> | Turn: {this.props.turn}
+                    <b>Game Board</b> | Turn {this.props.turn}
                 </Card.Header>
                 <Card.Body>
                 </Card.Body>

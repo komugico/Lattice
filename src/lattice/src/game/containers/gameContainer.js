@@ -33,8 +33,10 @@ class GameContainer extends Component {
                         <Col xl={2} lg={2} md={2} sm={2} xs={2}>
                             <UserPanel
                                 playerName="Player 1"
+                                player={PLAYER_1}
                                 score={this.props.scores.player1}
-                                isMyTurn={this.props.next == PLAYER_1}
+                                stones={this.props.stones.player1}
+                                isMyTurn={this.props.next === PLAYER_1}
                             />
                         </Col>
                         <Col xl={8} lg={8} md={8} sm={8} xs={8}>
@@ -50,8 +52,10 @@ class GameContainer extends Component {
                         <Col xl={2} lg={2} md={2} sm={2} xs={2}>
                             <UserPanel
                                 playerName="Player 2"
+                                player={PLAYER_2}
                                 score={this.props.scores.player2}
-                                isMyTurn={this.props.next == PLAYER_2}
+                                stones={this.props.stones.player2}
+                                isMyTurn={this.props.next === PLAYER_2}
                             />
                         </Col>
                     </Row>

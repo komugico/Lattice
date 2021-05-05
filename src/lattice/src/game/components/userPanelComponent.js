@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 
 import { Card, Button } from 'react-bootstrap';
 
+import StonePanel from './stonePanelComponent';
+
 class UserPanel extends Component {
     constructor(props) {
         super(props);
@@ -24,6 +26,11 @@ class UserPanel extends Component {
                     <Button variant="outline-danger">Surrender</Button>
                     <hr />
                     <Card.Title>Stones</Card.Title>
+                    <StonePanel
+                        numSmall={this.props.stones.small}
+                        numBig={this.props.stones.big}
+                        player={this.props.player}
+                    />
                 </Card.Body>
             </Card>
         );
