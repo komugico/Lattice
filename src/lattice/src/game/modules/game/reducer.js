@@ -7,7 +7,7 @@ import * as C from '../../constants/gameConstant';
 /* ========================================================================== */
 /* Constant Values                                                            */
 /* ========================================================================== */
-// 諸々の初期値をNUM_LATTICEから計算
+/* 諸々の初期値をNUM_LATTICEから計算 */
 const initialBoard = {
     lattice: JSON.parse(JSON.stringify(
                 (new Array(C.NUM_LATTICE)).fill((new Array(C.NUM_LATTICE)).fill(C.STONE_EMPTY)))
@@ -19,7 +19,7 @@ const initialBoard = {
 const initialSmallStones = Math.floor(C.NUM_LATTICE * (C.NUM_LATTICE - 1) / 2);
 const initialBigStones = Math.floor((C.NUM_LATTICE - 2) * (C.NUM_LATTICE - 2) / 2);
 
-// 初期ステート
+/* 初期ステート */
 const initialState = {
     board: initialBoard,
     stones: {
@@ -46,28 +46,50 @@ const initialState = {
 /* ========================================================================== */
 const gameReducer = (state = initialState, action) => {
     switch (action.type) {
-        case actions.RESET_STATE:
+        /* ================================================================== */
+        case actions.RESET_STATE: /* 初期状態にリセットする ================= */
             return initialState;
-        case actions.GRAB_STONE:
+        /* ================================================================== */
+        case actions.PROGRESS_TURN: /* ターンを進める ======================= */
+            if (state.next == C.PLAYER_1) {
+                /* プレイヤー１からプレイヤー２へ */
+                return { ...state, turn: state.turn + 1, next: C.PLAYER_2 };
+            }
+            else {
+                /* プレイヤー２からプレイヤー１へ */
+                return { ...state, turn: state.turn + 1, next: C.PLAYER_1 };
+            }
+        /* ================================================================== */
+        case actions.GRAB_STONE: /* 石を持つ ================================ */
             return { ...state, grabbed: action.payload };
-        case actions.PUT_STONE:
+        /* ================================================================== */
+        case actions.PUT_STONE: /* 石を置く ================================= */
+            let x = action.payload.x;
+            let y = action.payload.y;
             let board = state.board;
             if (state.grabbed & C.STONE_CHK_BIG) {
-                if (board.block[action.payload.y][action.payload.x] === C.STONE_EMPTY) {
-                    board.block[action.payload.y][action.payload.x] = state.grabbed;
+                /* 大きい石の場合 */
+                if (board.block[y][x] === C.STONE_EMPTY) {
+                    /* 置き場所が空の場合は置く */
+                    board.block[y][x] = state.grabbed;
                 }
                 else {
+                    /* 置き場所に石がある場合は置かない */
                     return { ...state }
                 }
             }
             else {
-                if (board.lattice[action.payload.y][action.payload.x] === C.STONE_EMPTY) {
-                    board.lattice[action.payload.y][action.payload.x] = state.grabbed;
+                /* 小さい石の場合 */
+                if (board.lattice[y][x] === C.STONE_EMPTY) {
+                    /* 置き場所が空の場合は置く */
+                    board.lattice[y][x] = state.grabbed;
                 }
                 else {
+                    /* 置き場所に石がある場合は置かない */
                     return { ...state }
                 }
             }
+            /* ターンを進める */
             return {
                 ...state,
                 board: board,
@@ -75,17 +97,13 @@ const gameReducer = (state = initialState, action) => {
                 turn: state.turn + 1,
                 next: state.next === C.PLAYER_1 ? C.PLAYER_2 : C.PLAYER_1
             }
-        case actions.UPDATE_SCORE:
+        /* ================================================================== */
+        case actions.UPDATE_SCORE: /* スコア計算を行う ====================== */
             return state;
-        case actions.PROGRESS_TURN:
-            if (state.next == C.PLAYER_1) {
-                return { ...state, turn: state.turn + 1, next: C.PLAYER_2 };
-            }
-            else {
-                return { ...state, turn: state.turn + 1, next: C.PLAYER_1 };
-            }
+        /* ================================================================== */
         default:
             return state;
+        /* ================================================================== */
     }
 };
 
