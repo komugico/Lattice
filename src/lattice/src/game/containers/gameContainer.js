@@ -1,17 +1,11 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 import { Container, Row, Col } from 'react-bootstrap';
 import { Navbar } from 'react-bootstrap';
-import { Button } from 'react-bootstrap';
 
-import { connect } from 'react-redux';
 import * as actions from '../modules/game/actions';
-
-import {
-    PLAYER_1,
-    PLAYER_2
-} from '../constants/gameConstant';
-
+import * as C from '../constants/gameConstant';
 import UserPanel from '../components/userPanelComponent';
 import BoardPanel from '../components/boardPanelComponent';
 
@@ -33,29 +27,31 @@ class GameContainer extends Component {
                         <Col xl={2} lg={2} md={2} sm={2} xs={2}>
                             <UserPanel
                                 playerName="Player 1"
-                                player={PLAYER_1}
+                                player={C.PLAYER_1}
                                 score={this.props.scores.player1}
                                 stones={this.props.stones.player1}
-                                isMyTurn={this.props.next === PLAYER_1}
+                                isMyTurn={this.props.next === C.PLAYER_1}
+                                grabbed={this.props.grabbed}
+                                actionGrabStone={this.props.grabStone}
                             />
                         </Col>
                         <Col xl={8} lg={8} md={8} sm={8} xs={8}>
                             <BoardPanel
                                 turn={this.props.turn}
+                                board={this.props.board}
+                                grabbed={this.props.grabbed}
+                                actionPutStone={this.props.putStone}
                             />
-                            <br />
-                            <Button variant="outline-primary" onClick={this.props.progressTurn}>progress</Button>
-                            <br />
-                            <br />
-                            <Button variant="outline-primary" onClick={this.props.resetState}>reset</Button>
                         </Col>
                         <Col xl={2} lg={2} md={2} sm={2} xs={2}>
                             <UserPanel
                                 playerName="Player 2"
-                                player={PLAYER_2}
+                                player={C.PLAYER_2}
                                 score={this.props.scores.player2}
                                 stones={this.props.stones.player2}
-                                isMyTurn={this.props.next === PLAYER_2}
+                                isMyTurn={this.props.next === C.PLAYER_2}
+                                grabbed={this.props.grabbed}
+                                actionGrabStone={this.props.grabStone}
                             />
                         </Col>
                     </Row>

@@ -1,11 +1,6 @@
 import React, { Component } from 'react';
 
-import {
-    PLAYER_1,
-    PLAYER_2,
-    WHITE_IMG_PATH,
-    BLACK_IMG_PATH
-} from '../constants/gameConstant';
+import * as C from '../constants/gameConstant';
 
 class BigStoneDesign extends Component {
     constructor(props) {
@@ -13,14 +8,14 @@ class BigStoneDesign extends Component {
     }
 
     getImgTag(player) {
-        if (player === PLAYER_1) {
+        if (player === C.PLAYER_1) {
             return (
-                <img src={WHITE_IMG_PATH} style={{ height: "60px" }} />
+                <img src={C.WHITE_IMG_PATH} style={{ height: "60px" }} />
             );
         }
         else {
             return (
-                <img src={BLACK_IMG_PATH} style={{ height: "60px" }} />
+                <img src={C.BLACK_IMG_PATH} style={{ height: "60px" }} />
             );
         }
     }

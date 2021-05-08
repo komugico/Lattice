@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 
-import { Card } from 'react-bootstrap';
+import { Row, Col, Card } from 'react-bootstrap';
 
-class BoardPanel extends Component{
+import BoardDesign from './boardDesignComponent';
+
+class BoardPanel extends Component {
     constructor(props) {
         super(props);
     }
@@ -14,6 +16,17 @@ class BoardPanel extends Component{
                     <b>Game Board</b> | Turn {this.props.turn}
                 </Card.Header>
                 <Card.Body>
+                    <Row>
+                        <Col xl={2} lg={2} md={2} sm={2} xs={2}></Col>
+                        <Col id="board-parent" xl={8} lg={8} md={8} sm={8} xs={8}>
+                            <BoardDesign
+                                board={this.props.board}
+                                grabbed={this.props.grabbed}
+                                actionPutStone={this.props.actionPutStone}
+                            />
+                        </Col>
+                        <Col xl={2} lg={2} md={2} sm={2} xs={2}></Col>
+                    </Row>
                 </Card.Body>
             </Card>
         );

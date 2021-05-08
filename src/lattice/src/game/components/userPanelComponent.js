@@ -23,13 +23,19 @@ class UserPanel extends Component {
                     {this.props.score} Victory Points
                     <hr />
                     <Card.Title>Operations</Card.Title>
-                    <Button variant="outline-danger">Surrender</Button>
+                    <Button
+                        variant="outline-danger"
+                        disabled={!this.props.isMyTurn}
+                    >Surrender</Button>
                     <hr />
                     <Card.Title>Stones</Card.Title>
                     <StonePanel
+                        isMyTurn={this.props.isMyTurn}
                         numSmall={this.props.stones.small}
                         numBig={this.props.stones.big}
                         player={this.props.player}
+                        actionGrabStone={this.props.actionGrabStone}
+                        grabbed={this.props.grabbed}
                     />
                 </Card.Body>
             </Card>

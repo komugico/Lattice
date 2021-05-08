@@ -1,12 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createStore } from 'redux';
 import { Provider } from 'react-redux';
-import * as serviceWorker from './serviceWorker';
-import GameContainer from './game/containers/gameContainer';
-import gameReducer from './game/modules/game/reducer';
 
-const store = createStore(gameReducer);
+import * as serviceWorker from './serviceWorker';
+
+import store from './game/stores/gameStore';
+import GameContainer from './game/containers/gameContainer';
 
 ReactDOM.render(
   <React.StrictMode>
