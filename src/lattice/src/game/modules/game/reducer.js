@@ -52,7 +52,7 @@ const gameReducer = (state = initialState, action) => {
             return initialState;
         /* ================================================================== */
         case actions.PROGRESS_TURN: /* ターンを進める ======================= */
-            if (state.next == C.PLAYER_1) {
+            if (state.next === C.PLAYER_1) {
                 /* プレイヤー１からプレイヤー２へ */
                 return { ...state, turn: state.turn + 1, next: C.PLAYER_2 };
             }
@@ -74,7 +74,7 @@ const gameReducer = (state = initialState, action) => {
                 if (board.block[y][x] === C.STONE_EMPTY) {
                     /* 置き場所が空の場合は置く */
                     board.block[y][x] = state.grabbed;
-                    if (state.next == C.PLAYER_1) {
+                    if (state.next === C.PLAYER_1) {
                         stones.player1.big = stones.player1.big - 1;
                     }
                     else {
@@ -91,7 +91,7 @@ const gameReducer = (state = initialState, action) => {
                 if (board.lattice[y][x] === C.STONE_EMPTY) {
                     /* 置き場所が空の場合は置く */
                     board.lattice[y][x] = state.grabbed;
-                    if (state.next == C.PLAYER_1) {
+                    if (state.next === C.PLAYER_1) {
                         stones.player1.small = stones.player1.small - 1;
                     }
                     else {
@@ -114,7 +114,8 @@ const gameReducer = (state = initialState, action) => {
             }
         /* ================================================================== */
         case actions.UPDATE_SCORE: /* スコア計算を行う ====================== */
-            return PopStateEvent;
+            alert("あなた、今、石を置きましたね？");
+            return state;
         /* ================================================================== */
         case actions.UPDATE_BOARD_SIZE: /* ボードサイズの更新を行う ========= */
             return { ...state, boardSize: action.payload };

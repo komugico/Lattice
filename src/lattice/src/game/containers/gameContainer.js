@@ -43,6 +43,7 @@ class GameContainer extends Component {
                                 grabbed={this.props.grabbed}
                                 actionPutStone={this.props.putStone}
                                 actionUpdateBoardSize={this.props.updateBoardSize}
+                                actionUpdateScore={this.props.updateScore}
                             />
                         </Col>
                         <Col xl={2} lg={2} md={2} sm={2} xs={2}>

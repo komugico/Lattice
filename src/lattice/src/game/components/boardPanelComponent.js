@@ -35,6 +35,7 @@ class BoardPanel extends Component {
                                 boardSize={this.props.boardSize}
                                 grabbed={this.props.grabbed}
                                 actionPutStone={this.props.actionPutStone}
+                                actionUpdateScore={this.props.actionUpdateScore}
                             />
                         </Col>
                         <Col xl={2} lg={2} md={2} sm={2} xs={2}></Col>

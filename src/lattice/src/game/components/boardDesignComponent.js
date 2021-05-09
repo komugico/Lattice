@@ -45,6 +45,7 @@ class BoardDesign extends Component {
             height: cellWidth + 'px',
             border: 'none',
             textAlign: 'center',
+            zIndex: 0,
             pointerEvents: eventEnable ? 'auto' : 'none'
         }
         return (
@@ -105,6 +106,7 @@ class BoardDesign extends Component {
             height: cellWidth + 'px',
             border: 'solid 1px',
             textAlign: 'center',
+            zIndex: 0,
             pointerEvents: eventEnable ? 'auto' : 'none'
         }
         return (
@@ -131,25 +133,30 @@ class BoardDesign extends Component {
     handleMouseEnterSmallStone(x, y) {
         let td = document.getElementById(this.idSmallStone(x, y));
         td.style.background = '#ff0000';
+        td.style.opacity = '0.5';
     }
 
     handleMouseLeaveSmallStone(x, y) {
         let td = document.getElementById(this.idSmallStone(x, y));
         td.style.background = '';
+        td.style.opacity = '';
     }
 
     handleMouseEnterBigStone(x, y) {
         let td = document.getElementById(this.idBigStone(x, y));
         td.style.background = '#00ff00';
+        td.style.opacity = '0.5';
     }
 
     handleMouseLeaveBigStone(x, y) {
         let td = document.getElementById(this.idBigStone(x, y));
         td.style.background = '';
+        td.style.opacity = '';
     }
 
     handleClickStone(x, y) {
         this.props.actionPutStone({ x: x, y: y });
+        this.props.actionUpdateScore();
     }
 
     render() {

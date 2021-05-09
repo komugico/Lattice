@@ -36,7 +36,7 @@ class StoneDesign extends Component {
                 }
             }
             return (
-                <img src={src} style={style} />
+                <img src={src} style={style} alt='' />
             )
         }
         else {
