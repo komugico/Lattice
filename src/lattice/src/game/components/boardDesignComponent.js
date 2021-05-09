@@ -132,26 +132,22 @@ class BoardDesign extends Component {
 
     handleMouseEnterSmallStone(x, y) {
         let td = document.getElementById(this.idSmallStone(x, y));
-        td.style.background = '#ff0000';
-        td.style.opacity = '0.5';
+        td.className = 'stone-select';
     }
 
     handleMouseLeaveSmallStone(x, y) {
         let td = document.getElementById(this.idSmallStone(x, y));
-        td.style.background = '';
-        td.style.opacity = '';
+        td.className = '';
     }
 
     handleMouseEnterBigStone(x, y) {
         let td = document.getElementById(this.idBigStone(x, y));
-        td.style.background = '#00ff00';
-        td.style.opacity = '0.5';
+        td.className = 'stone-select';
     }
 
     handleMouseLeaveBigStone(x, y) {
         let td = document.getElementById(this.idBigStone(x, y));
-        td.style.background = '';
-        td.style.opacity = '';
+        td.className = '';
     }
 
     handleClickStone(x, y) {

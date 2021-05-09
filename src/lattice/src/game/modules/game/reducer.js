@@ -114,8 +114,14 @@ const gameReducer = (state = initialState, action) => {
             }
         /* ================================================================== */
         case actions.UPDATE_SCORE: /* スコア計算を行う ====================== */
-            alert("あなた、今、石を置きましたね？");
-            return state;
+            let newScore = {
+                player1: state.next === C.PLAYER_1 ? state.scores.player1 : state.scores.player1 + 1,
+                player2: state.next === C.PLAYER_2 ? state.scores.player2 : state.scores.player2 + 1,
+            }
+            return {
+                ...state,
+                scores: newScore
+            };
         /* ================================================================== */
         case actions.UPDATE_BOARD_SIZE: /* ボードサイズの更新を行う ========= */
             return { ...state, boardSize: action.payload };
