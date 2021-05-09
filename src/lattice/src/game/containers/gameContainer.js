@@ -12,7 +12,6 @@ import BoardPanel from '../components/boardPanelComponent';
 class GameContainer extends Component {
     constructor(props) {
         super(props);
-        console.dir(props)
     }
     
     render() {
@@ -28,6 +27,7 @@ class GameContainer extends Component {
                             <UserPanel
                                 playerName="Player 1"
                                 player={C.PLAYER_1}
+                                boardSize={this.props.boardSize}
                                 score={this.props.scores.player1}
                                 stones={this.props.stones.player1}
                                 isMyTurn={this.props.next === C.PLAYER_1}
@@ -39,14 +39,17 @@ class GameContainer extends Component {
                             <BoardPanel
                                 turn={this.props.turn}
                                 board={this.props.board}
+                                boardSize={this.props.boardSize}
                                 grabbed={this.props.grabbed}
                                 actionPutStone={this.props.putStone}
+                                actionUpdateBoardSize={this.props.updateBoardSize}
                             />
                         </Col>
                         <Col xl={2} lg={2} md={2} sm={2} xs={2}>
                             <UserPanel
                                 playerName="Player 2"
                                 player={C.PLAYER_2}
+                                boardSize={this.props.boardSize}
                                 score={this.props.scores.player2}
                                 stones={this.props.stones.player2}
                                 isMyTurn={this.props.next === C.PLAYER_2}

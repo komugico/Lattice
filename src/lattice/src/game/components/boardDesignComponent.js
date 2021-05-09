@@ -1,44 +1,22 @@
 import React, { Component } from 'react';
 
 import * as C from '../constants/gameConstant';
+import StoneDesign from './stoneDesignComponent';
 
 class BoardDesign extends Component {
     constructor(props) {
         super(props);
-
-        this.width = 0;
-        this.cellWidth = 0;
-        this.state = {
-            style1: {
-                position: 'relative',
-                paddingTop: '100%',
-                visibility: 'hidden'
-            }
-        }
-        window.addEventListener(
-            'resize',
-            () => this.resize()
-        );
-        setTimeout(
-            () => this.resize(),
-            10
-        )
-        setTimeout(
-            () => this.visible(),
-            20
-        )
     }
 
-    tableSmallStone(eventEnable) {
+    tableSmallStone(eventEnable, cellWidth) {
         let trs = []
         for (let y_idx = 0; y_idx < C.NUM_LATTICE; y_idx++) {
-            trs.push(this.trSmallStone(y_idx, eventEnable));
+            trs.push(this.trSmallStone(y_idx, eventEnable, cellWidth));
         }
         let style = {
             position: 'absolute',
             left: 0,
-            top: 0,
-            border: 'none'
+            top: 0
         }
         return (
             <table style={style}>
@@ -49,10 +27,10 @@ class BoardDesign extends Component {
         );
     }
 
-    trSmallStone(y, eventEnable) {
+    trSmallStone(y, eventEnable, cellWidth) {
         let tds = []
         for (let x_idx = 0; x_idx < C.NUM_LATTICE; x_idx++) {
-            tds.push(this.tdSmallStone(x_idx, y, eventEnable));
+            tds.push(this.tdSmallStone(x_idx, y, eventEnable, cellWidth));
         }
         return (
             <tr>
@@ -61,10 +39,10 @@ class BoardDesign extends Component {
         )
     }
 
-    tdSmallStone(x, y, eventEnable) {
+    tdSmallStone(x, y, eventEnable, cellWidth) {
         let style = {
-            width: this.cellWidth + 'px',
-            height: this.cellWidth + 'px',
+            width: cellWidth + 'px',
+            height: cellWidth + 'px',
             border: 'none',
             textAlign: 'center',
             pointerEvents: eventEnable ? 'auto' : 'none'
@@ -77,7 +55,10 @@ class BoardDesign extends Component {
                 onClick={() => this.handleClickStone(x, y)}
                 style={style}
             >
-            {this.props.board.lattice[y][x]}
+                <StoneDesign
+                    boardSize={this.props.boardSize}
+                    stone={this.props.board.lattice[y][x]}
+                />
             </td>
         )
     }
@@ -87,16 +68,15 @@ class BoardDesign extends Component {
         return id;
     }
 
-    tableBigStone(eventEnable) {
+    tableBigStone(eventEnable, cellWidth) {
         let trs = []
         for (let y_idx = 0; y_idx < (C.NUM_LATTICE - 1); y_idx++) {
-            trs.push(this.trBigStone(y_idx, eventEnable));
+            trs.push(this.trBigStone(y_idx, eventEnable, cellWidth));
         }
         let style = {
             position: 'absolute',
-            left: this.cellWidth / 2,
-            top: this.cellWidth / 2,
-            border: 'none'
+            left: cellWidth / 2,
+            top: cellWidth / 2
         }
         return (
             <table style={style}>
@@ -107,10 +87,10 @@ class BoardDesign extends Component {
         );
     }
 
-    trBigStone(y, eventEnable) {
+    trBigStone(y, eventEnable, cellWidth) {
         let tds = []
         for (let x_idx = 0; x_idx < (C.NUM_LATTICE - 1); x_idx++) {
-            tds.push(this.tdBigStone(x_idx, y, eventEnable));
+            tds.push(this.tdBigStone(x_idx, y, eventEnable, cellWidth));
         }
         return (
             <tr>
@@ -119,10 +99,10 @@ class BoardDesign extends Component {
         )
     }
 
-    tdBigStone(x, y, eventEnable) {
+    tdBigStone(x, y, eventEnable, cellWidth) {
         let style = {
-            width: this.cellWidth + 'px',
-            height: this.cellWidth + 'px',
+            width: cellWidth + 'px',
+            height: cellWidth + 'px',
             border: 'solid 1px',
             textAlign: 'center',
             pointerEvents: eventEnable ? 'auto' : 'none'
@@ -135,7 +115,10 @@ class BoardDesign extends Component {
                 onClick={() => this.handleClickStone(x, y)}
                 style={style}
             >
-            {this.props.board.block[y][x]}
+            <StoneDesign
+                boardSize={this.props.boardSize}
+                stone={this.props.board.block[y][x]}
+            />
             </td>
         )
     }
@@ -166,51 +149,33 @@ class BoardDesign extends Component {
     }
 
     handleClickStone(x, y) {
-        this.props.actionPutStone({
-            x: x,
-            y: y
-        });
-    }
-
-    resize() {
-        if (document.getElementById('board-parent')) {
-            this.width = document.getElementById('board-parent').clientWidth * 0.9;
-            this.cellWidth = Math.floor(this.width / (C.NUM_LATTICE));
-        }
-    }
-
-    visible() {
-        this.setState({
-            style1: {
-                position: 'relative',
-                paddingTop: '100%',
-                visibility: 'visible'
-            }
-        })
+        this.props.actionPutStone({ x: x, y: y });
     }
 
     render() {
+        let cellWidth = Math.floor(this.props.boardSize / (C.NUM_LATTICE));
+
         if (this.props.grabbed & C.STONE_CHK_EXIST) {
             if (this.props.grabbed & C.STONE_CHK_BIG) {
                 return (
-                    <div style={this.state.style1}>
-                        {this.tableSmallStone(false)}
-                        {this.tableBigStone(true)}
+                    <div style={{position: 'relative', paddingTop: '100%'}}>
+                        {this.tableSmallStone(false, cellWidth)}
+                        {this.tableBigStone(true, cellWidth)}
                     </div>
                 )
             } else {
                 return (
-                    <div style={this.state.style1}>
-                        {this.tableBigStone(false)}
-                        {this.tableSmallStone(true)}
+                    <div style={{position: 'relative', paddingTop: '100%'}}>
+                        {this.tableBigStone(false, cellWidth)}
+                        {this.tableSmallStone(true, cellWidth)}
                     </div>
                 )
             }
         } else {
             return (
-                <div style={this.state.style1}>
-                    {this.tableBigStone(false)}
-                    {this.tableSmallStone(false)}
+                <div style={{position: 'relative', paddingTop: '100%'}}>
+                    {this.tableBigStone(false, cellWidth)}
+                    {this.tableSmallStone(false, cellWidth)}
                 </div>
             )
         }

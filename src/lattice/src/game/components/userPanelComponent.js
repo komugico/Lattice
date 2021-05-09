@@ -11,9 +11,7 @@ class UserPanel extends Component {
 
     render() {
         return (
-            <Card
-                border={this.props.isMyTurn && "success"}
-            >
+            <Card border={this.props.isMyTurn && "success"}>
                 <Card.Header>
                     <b>{this.props.playerName}</b>
                     <i>{this.props.isMyTurn && " It's your turn."}</i>
@@ -33,6 +31,7 @@ class UserPanel extends Component {
                         isMyTurn={this.props.isMyTurn}
                         numSmall={this.props.stones.small}
                         numBig={this.props.stones.big}
+                        boardSize={this.props.boardSize}
                         player={this.props.player}
                         actionGrabStone={this.props.actionGrabStone}
                         grabbed={this.props.grabbed}

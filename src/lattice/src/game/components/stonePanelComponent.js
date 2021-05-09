@@ -3,8 +3,7 @@ import React, { Component } from 'react';
 import { Row, Col, Button } from 'react-bootstrap';
 
 import * as C from '../constants/gameConstant';
-import SmallStoneDesign from './smallStoneDesignComponent';
-import BigStoneDesign from './bigStoneDesignComponent';
+import StoneDesign from './stoneDesignComponent';
 
 class StonePanel extends Component {
     constructor(props) {
@@ -29,30 +28,49 @@ class StonePanel extends Component {
         }
     }
 
-    getSmallImgs(num, player) {
-        let smallImgs = new Array();
-        for (let i = 0; i < num; i++) {
-            smallImgs.push(
-                <SmallStoneDesign player={player} />
-            );
+    smallStones() {
+        let stones = new Array();
+        for (let i = 0; i < this.props.numSmall; i++) {
+            if (this.props.player === C.PLAYER_1) {
+                stones.push(
+                    <StoneDesign
+                        boardSize={this.props.boardSize}
+                        stone={C.STONE_SMALL_WHITE}
+                    />);
+            }
+            else {
+                stones.push(
+                    <StoneDesign
+                        boardSize={this.props.boardSize}
+                        stone={C.STONE_SMALL_BLACK}
+                    />);
+            }
         }
-        return smallImgs;
+        return stones;
     }
 
-    getBigImgs(num, player) {
-        let bigImgs = new Array();
-        for (let i = 0; i < num; i++) {
-            bigImgs.push(
-                <BigStoneDesign player={player} />
-            );
+    bigStones() {
+        let stones = new Array();
+        for (let i = 0; i < this.props.numBig; i++) {
+            if (this.props.player === C.PLAYER_1) {
+                stones.push(
+                    <StoneDesign
+                        boardSize={this.props.boardSize}
+                        stone={C.STONE_BIG_WHITE}
+                    />);
+            }
+            else {
+                stones.push(
+                    <StoneDesign
+                        boardSize={this.props.boardSize}
+                        stone={C.STONE_BIG_BLACK}
+                    />);
+            }
         }
-        return bigImgs;
+        return stones;
     }
-
 
     render() {
-        let smallImgs = this.getSmallImgs(this.props.numSmall, this.props.player);
-        let bigImgs = this.getBigImgs(this.props.numBig, this.props.player);
         let smallStoneButtonVariant = "outline-primary";
         if (this.props.isMyTurn
             && (this.props.grabbed & C.STONE_CHK_EXIST)
@@ -73,22 +91,22 @@ class StonePanel extends Component {
                         variant={smallStoneButtonVariant}
                         size="sm"
                         onClick={() => this.handleClickGrabSmallStone()}
-                        disabled={!this.props.isMyTurn}
+                        disabled={!this.props.isMyTurn || !this.props.numSmall}
                         block
                     >Grab<br />Small Stone</Button>
                     <br />
-                    {smallImgs}
+                    {this.smallStones()}
                 </Col>
                 <Col xl={6} lg={6} md={6} sm={6} xs={6}>
                     <Button
                         variant={bigStoneButtonVariant}
                         size="sm"
                         onClick={() => this.handleClickGrabBigStone()}
-                        disabled={!this.props.isMyTurn}
+                        disabled={!this.props.isMyTurn || !this.props.numBig}
                         block
                     >Grab<br />Big Stone</Button>
                     <br />
-                    {bigImgs}
+                    {this.bigStones()}
                 </Col>
             </Row>
         );
