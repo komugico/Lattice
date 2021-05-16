@@ -1,0 +1,29 @@
+@startuml
+title Lattice Sequence Diagram
+
+actor User
+participant GameContainer
+participant UserPanel
+participant StonePanel
+participant BoardPanel
+participant Reducer
+database Store
+
+group initialization
+    Reducer -> Store: initialize
+    Store --> GameContainer: state
+    Store --> GameContainer: actions
+end
+
+group GrabStone
+    User -> StonePanel: click_stone_operation
+    StonePanel --> GameContainer: handle_click
+    GameContainer -> Reducer: action_grab_stone
+    Reducer -> Store: update_state
+    Store --> GameContainer: state
+    GameContainer -> Reducer: action_update_score
+    Reducer -> Store: update_state
+    Store --> GameContainer: state
+end
+
+@enduml
