@@ -46,7 +46,10 @@ class GameContainer extends Component {
                                 actionUpdateBoardSize={this.props.updateBoardSize}
                                 actionUpdateScore={this.props.updateScore}
                             />
-                            <ResetButton />
+                            <ResetButton
+                                actionResetState={this.props.resetState}
+                                actionUpdateBoardSize={this.props.updateBoardSize}
+                            />
                         </Col>
                         <Col xl={2} lg={2} md={2} sm={2} xs={2}>
                             <UserPanel

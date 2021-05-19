@@ -9,9 +9,19 @@ class ResetButton extends Component {
         super(props);
     }
 
+    handleClick() {
+        this.props.actionResetState()
+        this.handleUpdateBoardSize()
+    }
+
+    handleUpdateBoardSize() {
+        let boardSize = document.getElementById('board-parent').clientWidth * 0.9;
+        this.props.actionUpdateBoardSize(boardSize);
+    }
+
     render() {
         return (
-            <Button>リセット</Button>
+            <Button onClick={() => this.handleClick()}>リセット</Button>
         )
     }
 }
