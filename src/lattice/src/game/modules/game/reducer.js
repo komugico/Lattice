@@ -49,7 +49,29 @@ const gameReducer = (state = initialState, action) => {
     switch (action.type) {
         /* ================================================================== */
         case actions.RESET_STATE: /* 初期状態にリセットする ================= */
-            return initialState;
+            // TODO: 配列が参照渡しになってしまっているので、初期化関数を用意して対応する
+            // https://github.com/komugico/Lattice/issues/2
+            return {
+                ...initialState,
+                board: {
+                    lattice: JSON.parse(JSON.stringify(
+                        (new Array(C.NUM_LATTICE)).fill((new Array(C.NUM_LATTICE)).fill(C.STONE_EMPTY)))
+                    ),
+                    block: JSON.parse(JSON.stringify(
+                        (new Array(C.NUM_LATTICE - 1)).fill((new Array(C.NUM_LATTICE - 1)).fill(C.STONE_EMPTY)))
+                    ),
+                },
+                stones: {
+                    player1: {
+                        small: initialSmallStones,
+                        big: initialBigStones
+                    },
+                    player2: {
+                        small: initialSmallStones,
+                        big: initialBigStones
+                    }
+                }
+            };
         /* ================================================================== */
         case actions.PROGRESS_TURN: /* ターンを進める ======================= */
             if (state.next === C.PLAYER_1) {
