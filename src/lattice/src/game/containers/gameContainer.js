@@ -8,6 +8,7 @@ import * as actions from '../modules/game/actions';
 import * as C from '../constants/gameConstant';
 import UserPanel from '../components/userPanelComponent';
 import BoardPanel from '../components/boardPanelComponent';
+import ResetButton from '../components/resetButtonComponent';
 
 class GameContainer extends Component {
     constructor(props) {
@@ -44,6 +45,10 @@ class GameContainer extends Component {
                                 actionPutStone={this.props.putStone}
                                 actionUpdateBoardSize={this.props.updateBoardSize}
                                 actionUpdateScore={this.props.updateScore}
+                            />
+                            <ResetButton
+                                actionResetState={this.props.resetState}
+                                actionUpdateBoardSize={this.props.updateBoardSize}
                             />
                         </Col>
                         <Col xl={2} lg={2} md={2} sm={2} xs={2}>
