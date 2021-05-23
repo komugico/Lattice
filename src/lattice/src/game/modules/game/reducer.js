@@ -2,54 +2,17 @@
 /* Import                                                                     */
 /* ========================================================================== */
 import * as actions from './actions';
+import * as logics from './logics';
 import * as C from '../../constants/gameConstant';
-
-/* ========================================================================== */
-/* Constant Values                                                            */
-/* ========================================================================== */
-/* 諸々の初期値をNUM_LATTICEから計算 */
-const initialBoard = {
-    lattice: JSON.parse(JSON.stringify(
-                (new Array(C.NUM_LATTICE)).fill((new Array(C.NUM_LATTICE)).fill(C.STONE_EMPTY)))
-             ),
-    block:   JSON.parse(JSON.stringify(
-                (new Array(C.NUM_LATTICE - 1)).fill((new Array(C.NUM_LATTICE - 1)).fill(C.STONE_EMPTY)))
-             ),
-};
-const initialSmallStones = Math.floor(C.NUM_LATTICE * (C.NUM_LATTICE - 1) / 2);
-const initialBigStones = Math.floor((C.NUM_LATTICE - 2) * (C.NUM_LATTICE - 2) / 2);
-
-/* 初期ステート */
-const initialState = {
-    board: initialBoard,
-    stones: {
-        player1: {
-            small: initialSmallStones,
-            big: initialBigStones
-        },
-        player2: {
-            small: initialSmallStones,
-            big: initialBigStones
-        }
-    },
-    scores: {
-        player1: C.INIT_SCORE,
-        player2: C.INIT_SCORE
-    },
-    boardSize: C.INIT_BOARD_SIZE,
-    turn: C.INIT_TURN,
-    next: C.PLAYER_1,
-    grabbed: C.STONE_EMPTY
-};
 
 /* ========================================================================== */
 /* Reducer                                                                    */
 /* ========================================================================== */
-const gameReducer = (state = initialState, action) => {
+const gameReducer = (state = logics.createInitState(), action) => {
     switch (action.type) {
         /* ================================================================== */
         case actions.RESET_STATE: /* 初期状態にリセットする ================= */
-            return initialState;
+            return logics.createInitState();
         /* ================================================================== */
         case actions.PROGRESS_TURN: /* ターンを進める ======================= */
             if (state.next === C.PLAYER_1) {
